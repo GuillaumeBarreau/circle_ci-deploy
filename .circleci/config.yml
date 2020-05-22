@@ -1,23 +1,23 @@
 version: 2.17
 jobs:
-  build:
-    working_directory: ~/hello-sts
-    docker:
-      - image: circleci/node:8.11.1
-    steps:
-      - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
-      - restore_cache:
-          key: dependency-cache-{{checksum "package-lock.json"}}
-      - run:
-          name: install-npm
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{checksum "package-lock.json"}}
-          paths:
-            - ./node_modules
+  # build:
+  #   working_directory: ~/hello-sts
+  #   docker:
+  #     - image: circleci/node:8.11.1
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: update-npm
+  #         command: 'sudo npm install -g npm@latest'
+  #     - restore_cache:
+  #         key: dependency-cache-{{checksum "package-lock.json"}}
+  #     - run:
+  #         name: install-npm
+  #         command: npm install
+  #     - save_cache:
+  #         key: dependency-cache-{{checksum "package-lock.json"}}
+  #         paths:
+  #           - ./node_modules
   deploy:
     machine:
       image: ubuntu-1604:201903-01
@@ -25,7 +25,7 @@ jobs:
       - checkout
       - run:
           name: Deploy over SSH
-          command: ssh -p your_port_number root@217.160.65.195 "cd ./Projects; git clone git@github.com:GuillaumeBarreau/circle_ci-deploy.git; npm run start";
+          command: ssh root@217.160.65.195 "cd ./Projects; git clone git@github.com:GuillaumeBarreau/circle_ci-deploy.git; npm run start";
 
 workflows:
   version: 2
